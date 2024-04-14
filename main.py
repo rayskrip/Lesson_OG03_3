@@ -19,6 +19,9 @@ target_y = random.randint(0, SCREEN_HEIGHT - target_heigth)
 
 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
+# Шрифт для отображения количества попаданий
+font = pygame.font.SysFont(None, 36)
+hits = 0  # Количество попаданий
 
 running = True
 while running:
@@ -29,9 +32,16 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_heigth:
+                hits += 1  # Увеличиваем количество попаданий
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_heigth)
     screen.blit(target_img, (target_x, target_y))
+
+    # Создаем изображение для отображения количества попаданий
+    hits_text = font.render(f'Попадания: {hits}', True, (0, 0, 0))
+
+    screen.blit(hits_text, (10, 10))  # Отрисовываем текст на экране
+
     pygame.display.update()
 
     pass
