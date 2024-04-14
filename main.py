@@ -23,6 +23,8 @@ color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 font = pygame.font.SysFont(None, 36)
 hits = 0  # Количество попаданий
 
+target_timer = 0  # Таймер для изменения положения цели
+
 running = True
 while running:
     screen.fill(color)
@@ -35,6 +37,14 @@ while running:
                 hits += 1  # Увеличиваем количество попаданий
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_heigth)
+
+    current_time = pygame.time.get_ticks()
+    # Проверяем, прошло ли 2 секунды (2000 миллисекунд)
+    if current_time - target_timer > 2000:
+        target_timer = current_time  # Сбрасываем таймер
+        target_x = random.randint(0, SCREEN_WIDTH - target_width)  # Изменяем положение цели
+        target_y = random.randint(0, SCREEN_HEIGHT - target_heigth)
+
     screen.blit(target_img, (target_x, target_y))
 
     # Создаем изображение для отображения количества попаданий
